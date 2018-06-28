@@ -25,7 +25,6 @@ function renderFeedbackRootElement() {
     constructor(props) {
       super(props);
       this.state = {
-        visibility: HIDDEN,
         // TODO: show data in popup with GET: /api/feedbacks/page/{pageId}/user/{Username}
         // TemplateId - GUID
         // TemplateName - String
