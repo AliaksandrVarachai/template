@@ -1,14 +1,11 @@
 let globals;
 
 switch (process.env.NODE_TOOL) {
-  case 'microstrategy':
-    globals = process.env.NODE_IS_LOCAL_START ? require('../../../mocked-data/microstrategy').default : require('./microstrategy').default;
-    break;
   case 'tableau':
-    globals = process.env.NODE_IS_LOCAL_START ? require('../../../mocked-data/tableau').default : require('./tableau').default;
+    globals = process.env.NODE_IS_STARTED_LOCALLY ? require('../../../mocked-data/tableau') : require('./tableau');
     break;
   default:
-    globals = process.env.NODE_IS_LOCAL_START ? require('../../../mocked-data/default').default : require('./default').default;
+    throw Error(`process.env.NODE_TOOL contains wrong value "${process.env.NODE_TOOL}"`);
 }
 
-export default globals;
+export default globals.default;
