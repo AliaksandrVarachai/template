@@ -4,7 +4,7 @@ export default function() {
   const visualFrame = globals.tableau.VizManager.getVizs()[0];
 
   function cbCustomViewLoad() {
-    visualFrame.removeEventListener(globals.tableau.TableauEventName.CUSTOM_VIEW_LOAD, callOnInitialize);
+    visualFrame.removeEventListener(globals.tableau.TableauEventName.CUSTOM_VIEW_LOAD, cbCustomViewLoad);
   }
 
   function cbTabSwitch() {
