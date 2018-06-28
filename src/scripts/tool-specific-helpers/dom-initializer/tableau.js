@@ -41,25 +41,30 @@ function addFeedbackButtonsToDocument() {
     return;
   }
 
-  const firstChild = parentButtonStartNode.firstChild;
-  const positiveFeedbackButton = createCustomViewButton(positiveFeedbackButtonId, '+1', 'positiveFeedback');
-  const negativeFeedbackButton = createCustomViewButton(negativeFeedbackButtonId, '-1', 'negativeFeedback');
+  const positiveFeedbackButton = createCustomViewButton(positiveFeedbackButtonId);
+  const negativeFeedbackButton = createCustomViewButton(negativeFeedbackButtonId);
 
+  positiveFeedbackButton.innerHTML =
+    `<input type="radio" name="feedback" id="feedback__up" class="feedback__radio">` +
+    `<label for="feedback__up" feedback-onclick="positiveFeedback" class="material-icons feedback__label feedback__positive">thumb_up</label>`;
+
+  negativeFeedbackButton.innerHTML =
+    `<input type="radio" name="feedback" id="feedback__down" class="feedback__radio">` +
+    `<label for="feedback__down" feedback-onclick="negativeFeedback" class="material-icons feedback__label feedback__negative">thumb_down</label>`;
+
+  const firstChild = parentButtonStartNode.firstChild;
   parentButtonStartNode.insertBefore(negativeFeedbackButton, firstChild);
   parentButtonStartNode.insertBefore(positiveFeedbackButton, firstChild);
 }
 
 
-function createCustomViewButton(btnId, text, clickEventName) {
+function createCustomViewButton(btnId) {
   const btn = document.createElement('div');
   btn.id = btnId;
   btn.setAttribute('class', 'tabToolbarButton tab-widget customviews');
   btn.setAttribute('role', 'button');
-  btn.setAttribute('aria-label', 'Custom views');
-  btn.setAttribute('tabindex', '0');
-  btn.setAttribute('style', 'position: relative; user-select: none; -webkit-tap-highlight-color: transparent; width: 115px !important;-ms-transform: translateY(-35%)');
-  btn.innerHTML = `<div feedback-onclick="${clickEventName}" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;"></div>` +
-    `<span class="tabToolbarButtonImg tab-icon-edit"></span><span class="tabToolbarButtonText">${text}</span>`;
+  btn.setAttribute('aria-label', 'Feedback');
+  btn.setAttribute('style', 'vertical-align: top; padding-top: 4px;');
   return btn;
 }
 

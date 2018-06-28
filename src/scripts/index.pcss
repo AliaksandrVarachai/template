@@ -1,1 +1,36 @@
+/* TODO: move material icons into local file */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+
+:global .feedback__label {
+  /*
+  padding-left: 5px;
+  padding-right: 5px;
+  */
+  color: #999;
+
+  &.material-icons {
+    font-size: 20px;
+  }
+}
+
+:global .feedback__radio {
+  display: none;
+
+  &:checked + .feedback__label {
+    color: #265673;
+  }
+
+  &:not(:checked) + .feedback__label:hover {
+    cursor: pointer;
+  }
+}
+
+:global .feedback__positive {
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+
+:global .feedback__negative {
+  vertical-align: bottom;
+}
