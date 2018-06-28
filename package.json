@@ -1,0 +1,16 @@
+{
+  "name": "feedback-tool",
+  "version": "1.0.0",
+  "description": "Web application for feedback collecting",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
+    "build": "cross-env webpack --mode=production --env.tool=tableau",
+    "build-dev": "cross-env webpack --mode=development --env.tool=tableau"
+  },
+  "author": "AliaksandrVarachai",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8"
+  }
+}
