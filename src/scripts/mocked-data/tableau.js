@@ -1,5 +1,3 @@
-import { findIndexByProperty } from '../scripts/helpers/array-operations';
-
 const DELAY_BEFORE_FIRST_EVENT_DISPATCH = 1500;
 const tableau = window.parent.tableau || {};
 
@@ -106,8 +104,16 @@ const sheetNodes = document.querySelectorAll('.tabLabel');
 const SHEETS = Array.prototype.map.call(sheetNodes, sheetNode => new Sheet({name: sheetNode.getAttribute('value')}));
 let activeSheetName = SHEETS[0].name;
 
+function findSheetByName(value) {
+  for (let inx = 0; inx < SHEETS.length; inx++) {
+    if (SHEETS[inx] && SHEETS[inx].name === value)
+      return inx;
+  }
+  return -1;
+}
+
 function changeActiveSheet(sheetName) {
-  const inx = findIndexByProperty(SHEETS, 'name', sheetName);
+  const inx = findSheetByName(sheetName);
   if (inx < 0)
     throw Error(`Active sheet "${sheetName}" is not found in SHEET array`);
   activeSheetName = sheetName;
@@ -126,7 +132,7 @@ function getPublishedSheetsInfo() {
 function activateSheetAsync(sheetName) {
   // DDM is ready only after TAB_SWITCH event;
   setTimeout(dispatchTabSwitch(sheetName), 500);
-  return findIndexByProperty(SHEETS, 'name', sheetName) > -1 ? Promise.resolve() : Promise.reject(`No "${sheetName}" in SHEET array`);
+  return findSheetByName(sheetName) > -1 ? Promise.resolve() : Promise.reject(`No "${sheetName}" in SHEET array`);
 }
 
 function Sheet({ name }) {
