@@ -1,6 +1,6 @@
 import globals from '../../tool-specific-helpers/globals';
 
-export function injectSelfUpdatingButtons() {
+function injectSelfUpdatingButtons() {
   const visualFrame = globals.tableau.VizManager.getVizs()[0];
 
   function cbCustomViewLoad() {
@@ -61,4 +61,8 @@ function createCustomViewButton(btnId, text, clickEventName) {
   btn.innerHTML = `<div feedback-onclick="${clickEventName}" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;"></div>` +
     `<span class="tabToolbarButtonImg tab-icon-edit"></span><span class="tabToolbarButtonText">${text}</span>`;
   return btn;
+}
+
+export default {
+  injectSelfUpdatingButtons,
 }
