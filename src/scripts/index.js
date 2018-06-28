@@ -6,6 +6,7 @@ import { FEEDBACK_ROOT_ID, FEEDBACK_EVENTS } from './constants/client';
 // import restApi from './rest-api';
 import domInitializer from './tool-specific-helpers/dom-initializer';
 // import toolInfoCollector from './tool-specific-helpers/tool-info-collector';
+import verifyTool from './tool-specific-helpers/verifiers';
 
 import './index.pcss';
 
