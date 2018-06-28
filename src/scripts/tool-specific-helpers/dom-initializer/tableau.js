@@ -1,6 +1,6 @@
 import globals from '../../tool-specific-helpers/globals';
 
-export default function() {
+export function injectSelfUpdatingButtons() {
   const visualFrame = globals.tableau.VizManager.getVizs()[0];
 
   function cbCustomViewLoad() {
