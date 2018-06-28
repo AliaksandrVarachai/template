@@ -5,14 +5,14 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const resources = path.resolve(__dirname, 'resources');
 const src = path.resolve(__dirname, 'src');
 
+const polyfills = [
+  'whatwg-fetch',
+  'babel-polyfill',
+];
+
 module.exports = function(env, argv) {
   const isProduction = argv.mode === 'production';
-  const isStartedLocally = process.argv.indexOf('webpack-dev-server') > -1;
-  console.log('************** list of arguments:');
-  process.argv.forEach((val, inx) => {
-    console.log(`${inx}: ${val}`);
-  });
-
+  const isStartedLocally = process.argv[1].indexOf('webpack-dev-server') > -1;
   const dist = path.resolve(__dirname, 'dist-' + env.tool);
 
   return {
