@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
+    "server": "node src/mocked-data/server.js",
     "build": "cross-env webpack --mode=production --env.tool=tableau",
     "build-dev": "cross-env webpack --mode=development --env.tool=tableau"
   },
@@ -29,6 +30,7 @@
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "file-loader": "^1.1.11",
+    "http": "0.0.0",
     "postcss-calc": "^6.0.1",
     "postcss-css-variables": "^0.9.0",
     "postcss-import": "^11.1.0",

@@ -2,7 +2,7 @@
  * Backend API settings.
  * @type {{ORIGIN: string, PATH: string}}
  */
-export const API_SETTINGS = {
+const API_SETTINGS = {
   // TODO: replace fake API params with real ones
   ORIGIN: 'http://ecsb00100b6f.epam.com',
   PATH: '/FeedbackTool/api'
@@ -10,12 +10,15 @@ export const API_SETTINGS = {
 
 /**
  * Settings for local test of the application.
- * @type {{ORIGIN: string, PATH: number}}
+ * @type {{HOST: string, ORIGIN: string, PATH: number}}
  */
 const API_SETTINGS_LOCAL = {
-  ORIGIN: 'http://localhost:9093',
+  HOSTNAME: 'localhost',
+  PORT: '9093',
   PATH: API_SETTINGS.PATH
 };
+API_SETTINGS_LOCAL.ORIGIN = `http://${API_SETTINGS_LOCAL.HOSTNAME}:${API_SETTINGS_LOCAL.PORT}`;
+
 
 module.exports = {
   API_SETTINGS,
