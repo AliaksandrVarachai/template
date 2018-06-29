@@ -10,15 +10,12 @@ export const API_SETTINGS = {
 
 /**
  * Settings for local test of the application.
- * @type {{NAME: string, PORT: number}}
+ * @type {{ORIGIN: string, PATH: number}}
  */
 const API_SETTINGS_LOCAL = {
-  PROTOCOL: 'http',
-  NAME: 'localhost',
-  PORT: 9093,
+  ORIGIN: 'http://localhost:9093',
   PATH: API_SETTINGS.PATH
 };
-API_SETTINGS_LOCAL.ORIGIN = `${API_SETTINGS_LOCAL.PROTOCOL}://${API_SETTINGS_LOCAL.NAME}:${API_SETTINGS_LOCAL.PORT}`;
 
 module.exports = {
   API_SETTINGS,
