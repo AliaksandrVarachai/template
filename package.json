@@ -4,8 +4,9 @@
   "description": "Web application for feedback collecting",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
-    "server": "node src/mocked-data/server.js",
+    "start": "run-p web-server api-server",
+    "web-server": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
+    "api-server": "node src/mocked-data/server.js",
     "build": "cross-env webpack --mode=production --env.tool=tableau",
     "build-dev": "cross-env webpack --mode=development --env.tool=tableau"
   },
@@ -48,5 +49,8 @@
     "webpack-dev-server": "^3.1.4",
     "whatwg-fetch": "^2.0.4"
   },
-  "repository": "empty"
+  "repository": "empty",
+  "devDependencies": {
+    "npm-run-all": "^4.1.3"
+  }
 }
