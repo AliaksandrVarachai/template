@@ -11,3 +11,13 @@ export const FEEDBACK_ROOT_ID = 'feedback-root';
 export const FEEDBACK_EVENTS = {
   'click': 'feedback-onclick',
 };
+
+/**
+ * State of user's feedback.
+ * @type {{NOT_SELECTED: string, POSITIVE: string, NEGATIVE: string}}
+ */
+export const FEEDBACK_STATE = {
+  NOT_SELECTED: '0',
+  POSITIVE: '1',
+  NEGATIVE: '2'
+};

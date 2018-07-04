@@ -18,12 +18,15 @@ const db = {
 };
 
 const server = http.createServer((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  // TODO: eliminate url only for API
   if (req.method === 'GET') {
     // example: http://hostname:port/FeedbackTool/api/Feedbacks/37A05CC9-A52C-40A5-91A8-0C328840A6BF/Denis
-    const reqParams = new RegExp(`${API_SETTINGS_LOCAL.path}\/([^\/]+)\/([^\/]+)$`, 'gi').exec(req.path);
+    const reqParams = new RegExp(`${API_SETTINGS_LOCAL.PATH.replace('/', '\/')}\/feedbacks\/([^\/]+)\/([^\/]+)$`, 'gi').exec(req.url);
     if (reqParams === null) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(`Wrong path "${req.path}"`));
+      res.writeHead(400);
+      res.end();
       return;
     }
     const pageId = reqParams[1];

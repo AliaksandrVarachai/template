@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactEventOutside from 'react-event-outside';
 // import classnames from 'classnames';
-import { FEEDBACK_ROOT_ID, FEEDBACK_EVENTS } from './constants/client';
-// import restApi from './rest-api';
+import { FEEDBACK_ROOT_ID, FEEDBACK_EVENTS, FEEDBACK_STATE } from './constants/client';
+import restApi from './rest-api';
 import domInitializer from './tool-specific-helpers/dom-initializer';
 // import toolInfoCollector from './tool-specific-helpers/tool-info-collector';
 import verifyTool from './tool-specific-helpers/verifiers';
@@ -13,7 +13,20 @@ import './index.pcss';
 // TODO: send a request for the saved previous feedback with activePageName and userName params
 verifyTool()
   .then(() => {
-    domInitializer.injectSelfUpdatingButtons();
+    // TODO: replace mocked data
+    const pageId = '37a05cc9-c52c-40a5-91c8-0c328840c6bf';
+    const userName = 'Denis';
+    return restApi.getFeedback(pageId, userName);
+  })
+  .then(feedback => {
+    console.log('feedback=', feedback);
+    let feedbackState = FEEDBACK_STATE.NOT_SELECTED; // TODO: move to upper state and set as a default state
+    if (feedback.isLike) {
+      feedbackState = FEEDBACK_STATE.POSITIVE;
+    } else {
+      feedbackState = FEEDBACK_STATE.NEGATIVE;
+    }
+    domInitializer.injectSelfUpdatingButtons(feedbackState);
     renderFeedbackRootElement();
   })
   .catch(error => {
