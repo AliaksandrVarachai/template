@@ -45,6 +45,9 @@ function renderFeedbackRootElement() {
         // IsLike - Boolean
         // CreatedDate - DateTime
       };
+      this.isResponseWaiting = false; // blocks sending of feedback until the previous one returns
+      this.formerClickedFeedback = FEEDBACK_STATE.NOT_SELECTED; // stores the state before the AJAX feedback request
+      this.latterClickedFeedback = FEEDBACK_STATE.NOT_SELECTED; // stores the state with the last user's choice
     }
 
     handleEvent = (event) => {
@@ -56,20 +59,50 @@ function renderFeedbackRootElement() {
           return;
         switch(eventOutsideName) {
           case 'positiveFeedback':
-            restApi.sendFeedback(true).then(() => {
-              console.log('Positive feedback is saved to the DB');
-            });
+            this.latterClickedFeedback = FEEDBACK_STATE.POSITIVE;
+            if (!this.isResponseWaiting) {
+              this.sendOnlyLatterFeedback(true, true);
+            }
             break;
           case 'negativeFeedback':
-            restApi.sendFeedback(false).then(() => {
-              console.log('Negative feedback is saved to the DB');
-            });
+            this.latterClickedFeedback = FEEDBACK_STATE.NEGATIVE;
+            if (!this.isResponseWaiting) {
+              this.sendOnlyLatterFeedback(false, true);
+            }
             break;
           default:
             console.log(`There is no event handler for "${eventOutsideName}"`);
         }
       });
     };
+
+    sendOnlyLatterFeedback(feedbackState, isFirst = false) {
+      if (isFirst) {
+        this.isResponseWaiting = true;
+        this.formerClickedFeedback = this.latterClickedFeedback;
+      }
+      return new Promise(resolve => {
+        restApi.sendFeedback(feedbackState).then(() => {
+          // console.log({
+          //   formerClickedFeedback: this.formerClickedFeedback,
+          //   latterClickedFeedback: this.latterClickedFeedback,
+          //   isResponseWaiting: this.isResponseWaiting
+          // });
+          if (this.formerClickedFeedback === this.latterClickedFeedback) {
+            // there are not user clicks during the feedback AJAX request
+            resolve(null);
+            this.isResponseWaiting = false;
+            console.log(`${feedbackState ? 'Positive': 'Negative'} feedback is saved to the DB`);
+          } else {
+            // there are user click during the feedback AJAX request
+            this.formerClickedFeedback = this.latterClickedFeedback;
+            // TODO: remove next commented line
+            // console.log(`${feedbackState ? 'Positive': 'Negative'} feedback is saved to the DB`);
+            this.sendOnlyLatterFeedback(this.latterClickedFeedback === FEEDBACK_STATE.POSITIVE);
+          }
+        });
+      });
+    }
 
     render() {
       return (

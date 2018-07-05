@@ -42,7 +42,9 @@ const server = http.createServer((req, res) => {
     const userName = reqParams[2];
     if (!db[pageId] || !db[pageId][userName]) {
       res.writeHead(FEEDBACK_IS_ABSENT_STATUS_CODE, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(`There is no data with pageId="${pageId}" or userName="${userName}`));
+      setTimeout(() => {
+        res.end(JSON.stringify(`There is no data with pageId="${pageId}" or userName="${userName}`));
+      }, 3000);
       return;
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -70,7 +72,9 @@ const server = http.createServer((req, res) => {
       });
       
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end();
+      setTimeout(() => {
+        res.end();
+      }, 3000);
     } else {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(`POST request to "${url}" is not supported`);
