@@ -1,4 +1,4 @@
-import { API_SETTINGS, API_SETTINGS_LOCAL } from '../constants/server';
+import { API_SETTINGS, API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } from '../constants/server';
 
 const API_PREFIX = process.env.NODE_IS_STARTED_LOCALLY
   ? `${API_SETTINGS_LOCAL.ORIGIN}${API_SETTINGS_LOCAL.PATH}`
@@ -20,12 +20,14 @@ ResponseError.prototype = Object.create(Error.prototype);
 /**
  * Processes a response and provides data from its body.
  * @param {object} response - a response object.
- * @returns {object} - a js object formed from response body.
+ * @returns {object|null} - a js object formed from response body or null when the feedback is absent.
  * @throws {error} - status and description of an error.
  */
 function getJsonFromResponse(response) {
   if (response.ok) {
     return response.json();
+  } else if (response.status === FEEDBACK_IS_ABSENT_STATUS_CODE) {
+    return null; // empty response body when there is not feedback in the DB
   }
   throw new ResponseError(response);
 }

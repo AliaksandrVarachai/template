@@ -20,12 +20,9 @@ verifyTool()
   })
   .then(feedback => {
     console.log('feedback=', feedback);
-    let feedbackState = FEEDBACK_STATE.NOT_SELECTED; // TODO: move to upper state and set as a default state
-    if (feedback.isLike) {
-      feedbackState = FEEDBACK_STATE.POSITIVE;
-    } else {
-      feedbackState = FEEDBACK_STATE.NEGATIVE;
-    }
+    let feedbackState = FEEDBACK_STATE.NOT_SELECTED;
+    if (feedback !== null)
+      feedbackState = feedback.isLike ? FEEDBACK_STATE.POSITIVE : FEEDBACK_STATE.NEGATIVE;
     domInitializer.injectSelfUpdatingButtons(feedbackState);
     renderFeedbackRootElement();
   })

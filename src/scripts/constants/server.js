@@ -19,8 +19,14 @@ const API_SETTINGS_LOCAL = {
 };
 API_SETTINGS_LOCAL.ORIGIN = `http://${API_SETTINGS_LOCAL.HOSTNAME}:${API_SETTINGS_LOCAL.PORT}`;
 
+/**
+ * Status code is sent when by the server when there is no feedback for a current page.
+ * @type {number}
+ */
+const FEEDBACK_IS_ABSENT_STATUS_CODE = 404;
 
 module.exports = {
   API_SETTINGS,
   API_SETTINGS_LOCAL,
+  FEEDBACK_IS_ABSENT_STATUS_CODE,
 };

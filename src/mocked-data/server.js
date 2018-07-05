@@ -1,4 +1,4 @@
-const { API_SETTINGS_LOCAL } = require('../scripts/constants/server');
+const { API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } = require('../scripts/constants/server');
 
 const http = require('http');
 
@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     const pageId = reqParams[1];
     const userName = reqParams[2];
     if (!db[pageId] || !db[pageId][userName]) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.writeHead(FEEDBACK_IS_ABSENT_STATUS_CODE, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(`There is no data with pageId="${pageId}" or userName="${userName}`));
       return;
     }
