@@ -3,11 +3,11 @@ const { API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } = require('../scrip
 const http = require('http');
 
 const db = {
-  '37a05cc9-c52c-40a5-91c8-0c328840c6bf': {
+  'page-uuid': {
     'Denis': {
-      "TemplateId": "37a05cc9-c52c-40a5-91c8-0c328840c6bf",
+      "TemplateId": "template-uuid",
       "TemplateName": "qwertySerge",
-      "PageId": "37a05cc9-a52c-40a5-91a8-0c328840a6bf",
+      "PageId": "page-uuid",
       "PageName": "qwerty1",
       "TemplatePath": "qwerty1",
       "UserName": "Denis",
@@ -18,12 +18,21 @@ const db = {
 };
 
 const server = http.createServer((req, res) => {
+  const { method, url } = req;
+  const apiRoute = url.replace(new RegExp(`^${API_SETTINGS_LOCAL.PATH.replace('/', '\/')}\/feedbacks\/?`, 'i'), '');
+
+  if (apiRoute.length === url.length) {
+    res.writeHead(400);
+    res.end(`route "${url}" is not supported by API server`);
+    return;
+  }
+
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  // TODO: eliminate url only for API
-  if (req.method === 'GET') {
-    // example: http://hostname:port/FeedbackTool/api/Feedbacks/37A05CC9-A52C-40A5-91A8-0C328840A6BF/Denis
-    const reqParams = new RegExp(`${API_SETTINGS_LOCAL.PATH.replace('/', '\/')}\/feedbacks\/([^\/]+)\/([^\/]+)$`, 'gi').exec(req.url);
+
+  if (method === 'GET') {
+    // example: hostname:port/FeedbackTool/api/Feedbacks/37A05CC9-A52C-40A5-91A8-0C328840A6BF/Denis
+    const reqParams = new RegExp(`^([^\/]+)\/([^\/]+)$`, 'gi').exec(apiRoute);
     if (reqParams === null) {
       res.writeHead(400);
       res.end();
@@ -38,11 +47,47 @@ const server = http.createServer((req, res) => {
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(db[pageId][userName]));
-  } else if (req.method === 'POST') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end('POST request is received');
+
+  } else if (method === 'POST') {
+    if (apiRoute === '') {
+      let rawFeedback = '';
+      req.on('data', chunk => {
+        rawFeedback += chunk;
+      });
+      req.on('end', () => {
+        const feedback = JSON.parse(rawFeedback);
+        const dbFeedback = {
+          ...feedback,
+          CreatedDate: new Date().toISOString()
+        };
+        if (db[feedback.PageId]) {
+          db[feedback.PageId][feedback.UserName] = dbFeedback;
+        } else {
+          db[feedback.PageId] = {
+            [feedback.UserName]: dbFeedback
+          };
+        }
+      });
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end();
+    } else {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(`POST request to "${url}" is not supported`);
+    }
+
+  } else if (method === 'OPTIONS') {
+    if (apiRoute === '') {
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.writeHead(200);
+      res.end();
+    } else {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(`OPTIONS request to "${url}" is not supported`);
+    }
+
   } else {
-    console.log(`Method "${req.method} is not supported"`)
+    console.log(`Method "${method} is not supported"`)
   }
 }).listen(API_SETTINGS_LOCAL.PORT, API_SETTINGS_LOCAL.HOSTNAME);
 

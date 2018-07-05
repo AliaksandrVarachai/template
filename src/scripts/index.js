@@ -14,15 +14,14 @@ import './index.pcss';
 verifyTool()
   .then(() => {
     // TODO: replace mocked data
-    const pageId = '37a05cc9-c52c-40a5-91c8-0c328840c6bf';
+    const pageId = 'page-uuid';
     const userName = 'Denis';
     return restApi.getFeedback(pageId, userName);
   })
   .then(feedback => {
-    console.log('feedback=', feedback);
     let feedbackState = FEEDBACK_STATE.NOT_SELECTED;
     if (feedback !== null)
-      feedbackState = feedback.isLike ? FEEDBACK_STATE.POSITIVE : FEEDBACK_STATE.NEGATIVE;
+      feedbackState = feedback.IsLike ? FEEDBACK_STATE.POSITIVE : FEEDBACK_STATE.NEGATIVE;
     domInitializer.injectSelfUpdatingButtons(feedbackState);
     renderFeedbackRootElement();
   })
@@ -57,10 +56,14 @@ function renderFeedbackRootElement() {
           return;
         switch(eventOutsideName) {
           case 'positiveFeedback':
-            console.log('Positive feedback is given');
+            restApi.sendFeedback(true).then(() => {
+              console.log('Positive feedback is saved to the DB');
+            });
             break;
           case 'negativeFeedback':
-            console.log('Negative feedback is given');
+            restApi.sendFeedback(false).then(() => {
+              console.log('Negative feedback is saved to the DB');
+            });
             break;
           default:
             console.log(`There is no event handler for "${eventOutsideName}"`);

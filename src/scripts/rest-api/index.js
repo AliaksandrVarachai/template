@@ -20,12 +20,13 @@ ResponseError.prototype = Object.create(Error.prototype);
 /**
  * Processes a response and provides data from its body.
  * @param {object} response - a response object.
- * @returns {object|null} - a js object formed from response body or null when the feedback is absent.
+ * @returns {object|null} - a js object formed from response body or null when: a) the feedback is absent; b) the response body is empty
  * @throws {error} - status and description of an error.
  */
 function getJsonFromResponse(response) {
   if (response.ok) {
-    return response.json();
+    return response.text()
+      .then(text => text.length ? JSON.parse(text) : null);
   } else if (response.status === FEEDBACK_IS_ABSENT_STATUS_CODE) {
     return null; // empty response body when there is not feedback in the DB
   }
@@ -78,15 +79,15 @@ function post(api, {body, headers = {}, credentials = 'same-origin', apiPrefix =
  * @throws {error} - status and description of the error.
  */
 function sendFeedback(isLike) {
+  // TODO: replace mocked data
   const body = {
-    TemplateId: "37a05cc9-c52c-40a5-91c8-0c328840c6bf",
+    TemplateId: "template-uuid",
     TemplateName: "qwertySerge",
-    PageId: "37a05cc9-a52c-40a5-91a8-0c328840a6bf",
+    PageId: "page-uuid",
     PageName: "qwerty1",
     TemplatePath: "qwerty1",
     UserName: "Denis",
-    IsLike: isLike,
-    CreatedDate: "2018-06-28T12:03:26.7393605" // TODO: generate every time
+    IsLike: isLike
   };
   return post('/feedbacks', { body });
 }
