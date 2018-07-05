@@ -1,0 +1,11 @@
+// Constants for local test purposes
+
+const LOCAL_TEST_TEMPLATE_ID = '37A05CC9-A52C-40A5-91A8-0C328840A6BF';
+const LOCAL_TEST_PAGE_ID = LOCAL_TEST_TEMPLATE_ID;
+const LOCAL_TEST_USER_NAME = 'Denis';
+
+module.exports = {
+  LOCAL_TEST_TEMPLATE_ID,
+  LOCAL_TEST_PAGE_ID,
+  LOCAL_TEST_USER_NAME,
+};

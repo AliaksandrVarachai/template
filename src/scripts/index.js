@@ -5,19 +5,17 @@ import ReactEventOutside from 'react-event-outside';
 import { FEEDBACK_ROOT_ID, FEEDBACK_EVENTS, FEEDBACK_STATE } from './constants/client';
 import restApi from './rest-api';
 import domInitializer from './tool-specific-helpers/dom-initializer';
-// import toolInfoCollector from './tool-specific-helpers/tool-info-collector';
+import reportInfoCollector from './tool-specific-helpers/report-info-collector';
+import sessionInfoCollector from './tool-specific-helpers/session-info-collector';
 import verifyTool from './tool-specific-helpers/verifiers';
 
 import './index.pcss';
 
-// TODO: send a request for the saved previous feedback with activePageName and userName params
+
 verifyTool()
-  .then(() => {
-    // TODO: replace mocked data
-    const pageId = '37A05CC9-A52C-40A5-91A8-0C328840A6BF';
-    const userName = 'Denis';
-    return restApi.getFeedback(pageId, userName);
-  })
+  // TODO: make parallel requests
+  .then(() => sessionInfoCollector.getSessionInfo())
+  .then(sessionInfo => restApi.getFeedback(reportInfoCollector.getPageId(), sessionInfo.userName))
   .then(feedback => {
     let feedbackState = FEEDBACK_STATE.NOT_SELECTED;
     if (feedback !== null)

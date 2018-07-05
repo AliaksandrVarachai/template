@@ -1,16 +1,17 @@
 const { API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } = require('../scripts/constants/server');
+const { LOCAL_TEST_TEMPLATE_ID, LOCAL_TEST_PAGE_ID, LOCAL_TEST_USER_NAME } = require('./constants');
 
 const http = require('http');
 
 const db = {
-  '37A05CC9-A52C-40A5-91A8-0C328840A6BF': {
-    'Denis': {
-      "TemplateId": "template-uuid",
+  [LOCAL_TEST_PAGE_ID]: {
+    [LOCAL_TEST_USER_NAME]: {
+      "TemplateId": LOCAL_TEST_TEMPLATE_ID,
       "TemplateName": "qwertySerge",
-      "PageId": "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
+      "PageId": LOCAL_TEST_PAGE_ID,
       "PageName": "qwerty1",
       "TemplatePath": "qwerty1",
-      "UserName": "Denis",
+      "UserName": LOCAL_TEST_USER_NAME,
       "IsLike": true,
       "CreatedDate": "2018-06-28T12:03:26.7393605"
     }

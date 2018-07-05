@@ -1,4 +1,6 @@
 import { API_SETTINGS, API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } from '../constants/server';
+import reportInfoCollector from '../tool-specific-helpers/report-info-collector';
+import sessionInfoCollector from '../tool-specific-helpers/session-info-collector';
 
 const API_PREFIX = process.env.NODE_IS_MOCK_API_SERVER
   ? `${API_SETTINGS.ORIGIN}${API_SETTINGS.PATH}`
@@ -79,17 +81,20 @@ function post(api, {body, headers = {}, credentials = 'same-origin', apiPrefix =
  * @throws {error} - status and description of the error.
  */
 function sendFeedback(isLike) {
-  // TODO: replace mocked data
-  const body = {
-    TemplateId: "template-uuid",
-    TemplateName: "qwertySerge",
-    PageId: "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
-    PageName: "qwerty1",
-    TemplatePath: "qwerty1",
-    UserName: "Denis",
-    IsLike: isLike
-  };
-  return post('/feedbacks', { body });
+  return sessionInfoCollector.getSessionInfo()
+    .then(sessionInfo => {
+      // TODO: replace mocked data
+      const body = {
+        TemplateId: reportInfoCollector.getTemplateId(),
+        TemplateName: "qwertySerge",
+        PageId: reportInfoCollector.getPageId(),
+        PageName: "qwerty1",
+        TemplatePath: "qwerty1",
+        UserName: sessionInfo.userName,
+        IsLike: isLike
+      };
+      return post('/feedbacks', { body });
+    })
 }
 
 /**
