@@ -9,7 +9,7 @@ export const FEEDBACK_ROOT_ID = 'feedback-root';
  * @type {{string: string}}
  */
 export const FEEDBACK_EVENTS = {
-  'click': 'feedback-onclick',
+  'change': 'feedback-onchange',
 };
 
 /**

@@ -53,48 +53,41 @@ function addFeedbackButtonsToDocument() {
   const positiveFeedbackButton = createCustomViewButton(positiveFeedbackButtonId);
   const negativeFeedbackButton = createCustomViewButton(negativeFeedbackButtonId);
 
-  // Positive feedback
+  // Positive feedback button content
   const positiveFeedbackRadio = document.createElement('input');
   positiveFeedbackRadio.type = 'radio';
   positiveFeedbackRadio.name = feedbackRadioGroupName;
   positiveFeedbackRadio.id = `${feedbackIdPrefix}__up`;
   positiveFeedbackRadio.setAttribute('class', `${feedbackClassNamePrefix}__radio`);
   positiveFeedbackRadio.checked = feedbackState === FEEDBACK_STATE.POSITIVE;
+  positiveFeedbackRadio.setAttribute('feedback-onchange', 'positiveFeedback');
 
   const positiveFeedbackLabel = document.createElement('label');
-  positiveFeedbackLabel.for = positiveFeedbackRadio.id;
+  positiveFeedbackLabel.htmlFor = positiveFeedbackRadio.id;
   positiveFeedbackLabel.setAttribute('class', `material-icons ${feedbackClassNamePrefix}__label ${feedbackClassNamePrefix}__positive`);
   positiveFeedbackLabel.innerHTML='thumb_up';
-  positiveFeedbackLabel.setAttribute('feedback-onclick', 'positiveFeedback'); // TODO: replace with onChange
 
   positiveFeedbackButton.appendChild(positiveFeedbackRadio);
   positiveFeedbackButton.appendChild(positiveFeedbackLabel);
 
-  // Negative feedback
+  // Negative feedback button content
   const negativeFeedbackRadio = document.createElement('input');
   negativeFeedbackRadio.type = 'radio';
   negativeFeedbackRadio.name = feedbackRadioGroupName;
   negativeFeedbackRadio.id = `${feedbackIdPrefix}__down`;
   negativeFeedbackRadio.setAttribute('class', `${feedbackClassNamePrefix}__radio`);
   negativeFeedbackRadio.checked = feedbackState === FEEDBACK_STATE.NEGATIVE;
+  negativeFeedbackRadio.setAttribute('feedback-onchange', 'negativeFeedback');
 
   const negativeFeedbackLabel = document.createElement('label');
-  negativeFeedbackLabel.for = negativeFeedbackRadio.id;
+  negativeFeedbackLabel.htmlFor = negativeFeedbackRadio.id;
   negativeFeedbackLabel.setAttribute('class', `material-icons ${feedbackClassNamePrefix}__label ${feedbackClassNamePrefix}__negative`);
   negativeFeedbackLabel.innerHTML='thumb_down';
-  negativeFeedbackLabel.setAttribute('feedback-onclick', 'negativeFeedback'); // TODO: replace with onChange
 
   negativeFeedbackButton.appendChild(negativeFeedbackRadio);
   negativeFeedbackButton.appendChild(negativeFeedbackLabel);
 
-  // positiveFeedbackButton.innerHTML =
-  //   `<input type="radio" name="feedback" id="feedback__up" class="feedback__radio">` +
-  //   `<label for="feedback__up" feedback-onclick="positiveFeedback" class="material-icons feedback__label feedback__positive">thumb_up</label>`;
-  //
-  // negativeFeedbackButton.innerHTML =
-  //   `<input type="radio" name="feedback" id="feedback__down" class="feedback__radio">` +
-  //   `<label for="feedback__down" feedback-onclick="negativeFeedback" class="material-icons feedback__label feedback__negative">thumb_down</label>`;
-
+  // Adding feedback buttons to DOM
   const firstChild = parentButtonStartNode.firstChild;
   parentButtonStartNode.insertBefore(negativeFeedbackButton, firstChild);
   parentButtonStartNode.insertBefore(positiveFeedbackButton, firstChild);
