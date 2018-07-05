@@ -3,7 +3,7 @@ const getRequest = `http://ecsb00100b6f.epam.com/FeedbackTool/api/Feedbacks/${Pa
 const getResponse = {
   "TemplateId": "template-uuid",
   "TemplateName": "qwertySerge",
-  "PageId": "page-uuid",
+  "PageId": "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
   "PageName": "qwerty1",
   "TemplatePath": "qwerty1",
   "UserName": "Denis",
@@ -16,7 +16,7 @@ const postRequest = 'http://ecsb00100b6f.epam.com/FeedbackTool/api/Feedbacks';
 const requestBody = {
   TemplateId: "template-uuid",
   TemplateName: "qwertySerge",
-  PageId: "page-uuid",
+  PageId: "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
   PageName: "qwerty1",
   TemplatePath: "qwerty1",
   UserName: "Denis",

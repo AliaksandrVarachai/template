@@ -38,6 +38,7 @@ module.exports = function(env, argv) {
         // 'process.env.NODE_ENV': JSON.stringify(argv.mode), will be set by Webpack mode option
         'process.env.NODE_TOOL': JSON.stringify(env.tool),
         'process.env.NODE_IS_STARTED_LOCALLY': JSON.stringify(isStartedLocally),
+        'process.env.NODE_IS_MOCK_API_SERVER': !!env.mockAPIServer
       }),
     ].filter(Boolean),
     module: {

@@ -4,7 +4,8 @@
   "description": "Web application for feedback collecting",
   "main": "index.js",
   "scripts": {
-    "start": "run-p web-server api-server",
+    "start": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau --env.mockAPIServer",
+    "start-with-mocked-api": "run-p web-server api-server",
     "web-server": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
     "api-server": "node src/mocked-data/server.js",
     "build": "cross-env webpack --mode=production --env.tool=tableau",

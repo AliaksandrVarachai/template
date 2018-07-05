@@ -1,8 +1,8 @@
 import { API_SETTINGS, API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } from '../constants/server';
 
-const API_PREFIX = process.env.NODE_IS_STARTED_LOCALLY
-  ? `${API_SETTINGS_LOCAL.ORIGIN}${API_SETTINGS_LOCAL.PATH}`
-  : `${API_SETTINGS.ORIGIN}${API_SETTINGS.PATH}`;
+const API_PREFIX = process.env.NODE_IS_MOCK_API_SERVER
+  ? `${API_SETTINGS.ORIGIN}${API_SETTINGS.PATH}`
+  : `${API_SETTINGS_LOCAL.ORIGIN}${API_SETTINGS_LOCAL.PATH}`;
 
 
 /**
@@ -83,7 +83,7 @@ function sendFeedback(isLike) {
   const body = {
     TemplateId: "template-uuid",
     TemplateName: "qwertySerge",
-    PageId: "page-uuid",
+    PageId: "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
     PageName: "qwerty1",
     TemplatePath: "qwerty1",
     UserName: "Denis",

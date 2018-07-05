@@ -14,7 +14,7 @@ import './index.pcss';
 verifyTool()
   .then(() => {
     // TODO: replace mocked data
-    const pageId = 'page-uuid';
+    const pageId = '37A05CC9-A52C-40A5-91A8-0C328840A6BF';
     const userName = 'Denis';
     return restApi.getFeedback(pageId, userName);
   })

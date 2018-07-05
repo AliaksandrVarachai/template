@@ -3,11 +3,11 @@ const { API_SETTINGS_LOCAL, FEEDBACK_IS_ABSENT_STATUS_CODE } = require('../scrip
 const http = require('http');
 
 const db = {
-  'page-uuid': {
+  '37A05CC9-A52C-40A5-91A8-0C328840A6BF': {
     'Denis': {
       "TemplateId": "template-uuid",
       "TemplateName": "qwertySerge",
-      "PageId": "page-uuid",
+      "PageId": "37A05CC9-A52C-40A5-91A8-0C328840A6BF",
       "PageName": "qwerty1",
       "TemplatePath": "qwerty1",
       "UserName": "Denis",
