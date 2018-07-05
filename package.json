@@ -7,7 +7,7 @@
     "start": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau --env.mockAPIServer",
     "start-with-mocked-api": "run-p web-server api-server",
     "web-server": "cross-env webpack-dev-server --hot --mode=development --env.tool=tableau",
-    "api-server": "node src/mocked-data/server.js",
+    "api-server": "node src/mocked-data/api-server.js",
     "build": "cross-env webpack --mode=production --env.tool=tableau",
     "build-dev": "cross-env webpack --mode=development --env.tool=tableau"
   },
